@@ -1,7 +1,8 @@
 # ESP32-c3 super mini
 ### PINOUT
+Pinout view is from button side
 
-| Pin (Left) | Function (Left)        | Pin (Right) | Function (Right)      |
+| Pin (Left) | Function               | Pin (Right) | Function              |
 |:----------:|:---------------------- |:-----------:|:----------------------|
 | 5          | GPIO5 / A5 / MISO      | 5V          | 5V                    |
 | 6          | GPIO6 / MOSI           | G           | GND                   |
