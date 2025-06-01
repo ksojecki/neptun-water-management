@@ -1,13 +1,13 @@
 #include <Arduino.h>
-#include "bluetooth.h"
+#include "bluetoothServer.h"
 #include <BLEDevice.h>
 
 #define SERVICE_UUID "772b9c75-c4b4-4a88-8419-10e80bece60f"
 
 class ConnectionCallback: public BLEServerCallbacks {
-  Bluetooth* bluetooth;
+  BluetoothServer* bluetooth;
   public: 
-    ConnectionCallback(Bluetooth* bluetooth) {
+    ConnectionCallback(BluetoothServer* bluetooth) {
         this->bluetooth = bluetooth;
     }
     void onConnect(BLEServer* pServer) {
@@ -24,7 +24,7 @@ class ConnectionCallback: public BLEServerCallbacks {
 
 std::string DeviceName = "NEPTUN_BARREL";
 
-void Bluetooth::start() {
+void BluetoothServer::start() {
     BLEDevice::init(DeviceName);
     this->server = BLEDevice::createServer();
     Serial.println("Bluetooth initialized");
@@ -35,6 +35,6 @@ void Bluetooth::start() {
     this->server->setCallbacks( new ConnectionCallback(this));
 }
 
-bool Bluetooth::isConected() {
+bool BluetoothServer::isConected() {
     return this->connected;
 }

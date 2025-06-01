@@ -1,9 +1,9 @@
-#ifndef BLUETOOTH_H
-#define BLUETOOTH_H
+#pragma once
 
 #include <BLEDevice.h>
+#include "startableService.h"
 
-class Bluetooth { 
+class BluetoothServer : public StartableService { 
     public: 
         void start();
         bool isConected();
@@ -12,5 +12,3 @@ class Bluetooth {
         bool connected;
     friend class ConnectionCallback;
 };
-
-#endif

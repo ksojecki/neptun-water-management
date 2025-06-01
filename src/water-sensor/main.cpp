@@ -1,22 +1,21 @@
 #include <Arduino.h>
-#include <bluetooth.h>
+#include <bluetoothServer.h>
+#include "sensors/ultrasound.h"
 
-Bluetooth* bluetooth = new Bluetooth();
+BluetoothServer* bluetooth = new BluetoothServer();
+Sensors::Ultrasound* ultrasound = new Sensors::Ultrasound();
 
 void setup()
 {
   Serial.begin(9600);
   Serial.setDebugOutput(true);
-
-  pinMode(0, OUTPUT);
-
+  pinMode(0, OUTPUT); // Led light for debug purpose
   // Wait 1 second for initialize of serial protocol for debug purpose
   delay(1000);
   bluetooth->start();
   Serial.println("Initialized");
 }
 
-bool flip = false;
 
 void loop() {
   delay(1000);
