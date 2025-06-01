@@ -1,12 +1,14 @@
 #pragma once
 
-namespace Sensors {
-    class Ultrasound {
+class Ultrasound {
     public:
-        Ultrasound();
-        ~Ultrasound();
+        Ultrasound(int triggerPin, int echoPin);
+        void initialize(int triggerPin, int echoPin);
+        float measure();
+    private :
+        int triggerPin;
+        int echoPin;
+        float lastValue;
+        float lastExecutionTime;
+};
 
-        void initialize();
-        void measure()
-    };
-}
