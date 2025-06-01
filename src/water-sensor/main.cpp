@@ -3,16 +3,17 @@
 #include "sensors/ultrasound.h"
 #include "models/tank.h"
 
-BluetoothServer *bluetooth = new BluetoothServer();
-Ultrasound *ultrasound;
-
-RoundTank *tank;
-
-using namespace std;
+#define BLUETOOTH_SERVICE_UUID "772b9c75-c4b4-4a88-8419-10e80bece60f"
+#define BLUETOOTH_DEVICE_NAME "NEPTUN_WATER_SENSOR"
 
 #define LED_PIN 0
 #define ULTRASOUND_TRIGGER_PIN 1
 #define ULTRASOUND_ECHO_PIN 3
+
+BluetoothServer *bluetooth = new BluetoothServer(BLUETOOTH_DEVICE_NAME, BLUETOOTH_SERVICE_UUID);
+Ultrasound *ultrasound;
+RoundTank *tank;
+using namespace std;
 
 void setup()
 {
@@ -34,7 +35,6 @@ void loop()
     float squareMeters = tank->getAmountOfWaterInSquareMeters();
     Serial.println("Water level in percentage: " + String(percentage * 100) + "%");
     Serial.println("Colected water " + String(squareMeters) + " m^3");
-
     Serial.print("Time: ");
     Serial.println(millis());
 }
