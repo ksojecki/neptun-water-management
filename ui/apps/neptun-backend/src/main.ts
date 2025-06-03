@@ -4,13 +4,18 @@
  */
 
 import express from 'express';
-import * as path from 'path';
 
 import { getCurrentState } from './api/water';
 
 const app = express();
 
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    next();
+});
 
 app.get('/api/water', (req, res) => {
   res.send(getCurrentState());

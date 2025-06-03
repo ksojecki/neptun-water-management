@@ -4,6 +4,9 @@
   "include": [],
   "references": [
     {
+      "path": "../../libs/data-model"
+    },
+    {
       "path": "./tsconfig.app.json"
     },
     {

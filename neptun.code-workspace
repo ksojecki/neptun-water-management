@@ -8,5 +8,9 @@
             "name": "UI",
             "path": "ui"
         }
-    ]
+    ],
+    "settings": {
+        "nxConsole.nxWorkspacePath": "../ui",
+        "nxConsole.generateAiAgentRules": true
+    }
 }

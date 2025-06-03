@@ -4,13 +4,7 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/neptun-ui-e2e"
-    },
-    {
       "path": "./apps/neptun-ui"
-    },
-    {
-      "path": "./apps/neptun-backend-e2e"
     },
     {
       "path": "./apps/neptun-backend"
