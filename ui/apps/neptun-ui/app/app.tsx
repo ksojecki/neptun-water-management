@@ -3,6 +3,7 @@
 
 import { SystemState } from '@neptun/data-model';
 import { useEffect, useState } from 'react';
+import { FcOk } from "react-icons/fc";
 
 export function App() {
   const [waterStatus, setWaterStatus] = useState<SystemState | null>(null);
@@ -12,8 +13,22 @@ export function App() {
         .then(status => setWaterStatus(status));
   }, [waterStatus, setWaterStatus]);
   return (
-    <div>
-        <h1>{waterStatus?.status}</h1>
+    <div className='h-dvh grid content-center p-4'>
+      <div className="object-center bg-neutral rounded-full grid grid-cols-1 p-4">
+        <div className='rounded-ful bg-success p-4 text-success-content rounded-full flex'>
+          <div className='p-4 grow'>
+            <h1 className='text-xl'>System is <b>{waterStatus?.status}</b></h1>
+          </div>
+          <div>
+            <FcOk size={60}></FcOk>
+          </div>
+        </div>
+      </div>
+      <div className='flex p-4'>
+        { waterStatus?.sources.map(source => 
+          <div className='bg-success m-5 p-5'>{source.type}</div>
+        )}
+      </div>
     </div>
   );
 }

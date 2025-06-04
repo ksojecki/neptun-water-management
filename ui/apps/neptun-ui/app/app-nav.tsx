@@ -1,6 +1,18 @@
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
+
 export function AppNav() {
+
+  const location = useLocation();
+
+  const [isVisible, setVisible] = useState(true);
+
+  useEffect(() => {
+    setVisible(location.pathname !== '/');
+  }, [location]);
+
   return (
-    <nav className="navbar bg-base-100 shadow-sm">
+    isVisible && <nav className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
         <a className="btn btn-ghost text-xl" href="#1">Neptun</a>
       </div>
