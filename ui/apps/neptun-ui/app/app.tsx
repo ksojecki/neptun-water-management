@@ -24,9 +24,12 @@ export function App() {
           </div>
         </div>
       </div>
-      <div className='flex p-4'>
+      <div className='flex p-4 gap-4'>
         { waterStatus?.sources.map(source => 
-          <div className='bg-success m-5 p-5'>{source.type}</div>
+          <div className='bg-success text-success-content p-4 rounded-full'>
+            <h1 className='text-xl'>{source.type}</h1>
+            <p>Source is <b>{source.water.state}</b></p>
+            </div>
         )}
       </div>
     </div>
