@@ -5,11 +5,11 @@ const sources: WaterSource[] = [
         id: "tank0",
         status: WaterSourceStatus.Unknown,
         name: "",
-        type: SourceType.Well,
-        capacity: 100,
+        type: SourceType.Tank,
+        capacity: 0.2,
         water: {
-            volume: 0,
-            percentage: 0,
+            volume: 0.1,
+            percentage: 0.5,
             state: WaterState.Full
         }
     },
@@ -17,11 +17,11 @@ const sources: WaterSource[] = [
         id: "tank1",
         status: WaterSourceStatus.Unknown,
         name: "",
-        type: SourceType.Well,
-        capacity: 100,
+        type: SourceType.Tank,
+        capacity: 0.3,
         water: {
-            volume: 0,
-            percentage: 0,
+            volume: 0.15,
+            percentage: 0.5,
             state: WaterState.Empty
         }
     },

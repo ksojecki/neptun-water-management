@@ -39,5 +39,5 @@ export enum WaterSourceStatus {
 export enum WaterState {
     Empty = 'empty',
     Medium = 'medium',
-    Full = 'fullś'
+    Full = 'full'
 }
