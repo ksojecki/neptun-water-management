@@ -13,7 +13,7 @@ export enum SystemStatus {
     Offline = "offline",
     Ready = "ready",
     NoWater = "no water",
-    Filling = "Filling tanks"
+    Filling = "filling tanks"
 }
 
 export type WaterSource = {
@@ -30,10 +30,10 @@ export type WaterSource = {
 }
 
 export enum WaterSourceStatus {
-    Unknown,
-    Connected,
-    Disconected,
-    Refilling,
+    Unknown = 'unknown',
+    Connected = 'connected',
+    Disconected = 'disconnected',
+    Refilling = 'refilling'
 }
 
 export enum WaterState {
