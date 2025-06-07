@@ -14,7 +14,6 @@ export function WaterSourceOverview(properties: { source: WaterSource }) {
                         aria-valuenow={percentage} role="progressbar">{percentage}%</div>
                 </div>
             </div>
-        
         </div> 
     )
 }
