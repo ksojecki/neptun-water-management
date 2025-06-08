@@ -1,41 +1,28 @@
-import { WaterSourceStatus, WaterState, SourceType, SystemState, SystemStatus, WaterSource } from "@neptun/data-model"
+import { SourceType, SystemState, SystemStatus, WaterLevel, WaterSource } from "@neptun/data-model"
 
 const sources: WaterSource[] = [
     {
-        id: "tank0",
-        status: WaterSourceStatus.Unknown,
-        name: "",
-        type: SourceType.Tank,
-        capacity: 0.2,
-        water: {
-            volume: 0.1,
-            percentage: 0.5,
-            state: WaterState.Full
-        }
+        name: 'Rain',
+        id: "rain",
+        type: SourceType.Rain,
+        isConnected: true
     },
     {
-        id: "tank1",
-        status: WaterSourceStatus.Unknown,
-        name: "",
+        id: "tank0",
+        isConnected: false,
+        isRefilled: true,
+        name: "Main Tank",
         type: SourceType.Tank,
-        capacity: 0.3,
-        water: {
-            volume: 0.15,
-            percentage: 0.5,
-            state: WaterState.Empty
-        }
+        waterLevel: WaterLevel.Medium,
+        maxCapacity: 0.3,
+        filledCapacity: 0.14
     },
     {
         id: "well0",
-        status: WaterSourceStatus.Unknown,
-        name: "",
+        isConnected: true,
+        name: "Well",
         type: SourceType.Well,
-        capacity: 0,
-        water: {
-            volume: 0,
-            percentage: 0,
-            state: WaterState.Medium
-        }
+        waterLevel: WaterLevel.Full
     }
 ];
 

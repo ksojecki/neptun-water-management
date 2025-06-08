@@ -24,12 +24,12 @@ export function App() {
       }, [waterStatus, setWaterStatus]);
 
   return (
-    waterStatus ? <div className='h-dvh grid content-center p-4'> 
-      <div className="object-center grid grid-cols-1 p-4">
+    waterStatus ? <div className='h-dvh grid content-center'> 
+      <div className="object-center grid grid-cols-1 m-4">
         <SystemStatusOverview systemStatus={waterStatus.status} />
       </div>
-      <div className='flex p-4 gap-4'>
-        { waterStatus?.sources.map(source => <WaterSourceOverview className="basis-1/3" key={source.id} source={source} />) }
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-4'>
+        { waterStatus?.sources.map(source => <WaterSourceOverview key={source.id} source={source} />) }
       </div>
     </div> :
     isLoading ? <OnLoading/> : <OnError />
