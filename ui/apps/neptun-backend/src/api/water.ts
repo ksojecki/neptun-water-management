@@ -5,7 +5,7 @@ const sources: WaterSource[] = [
         name: 'Rain',
         id: "rain",
         type: SourceType.Rain,
-        isConnected: true
+        isConnected: false
     },
     {
         id: "tank0",

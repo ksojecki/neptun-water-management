@@ -5,31 +5,30 @@ import { SystemState } from '@neptun/data-model';
 import { JSX, useEffect, useState } from 'react';
 import { WaterSourceOverview } from './water-source';
 import { SystemStatusOverview } from './system-status';
+import { NeptunBackend } from './api/neptun-backend';
+
+const neptunBackend = new NeptunBackend('http://localhost:3333/api');
 
 export function App() {
   const [waterStatus, setWaterStatus] = useState<SystemState | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
   useEffect(() => {
-      fetch('http://localhost:3333/api/water')
-        .then(response => response.json() as Promise<SystemState>)
-        .then(status => {
-          setWaterStatus(status);
-          setIsLoading(false);
-        })
-        .catch(error => {
-          console.error('Error fetching water status:', error);
-          setWaterStatus(null);
-          setIsLoading(false);
-        });
-      }, [waterStatus, setWaterStatus]);
+    neptunBackend.getSystemState()
+      .then(state => setWaterStatus(state))
+      .catch(() => setWaterStatus(null))
+      .finally(() => setIsLoading(false));
+  }, [waterStatus, setWaterStatus]);
 
   return (
-    waterStatus ? <div className='h-dvh grid content-center'> 
-      <div className="object-center grid grid-cols-1 m-4">
-        <SystemStatusOverview systemStatus={waterStatus.status} />
-      </div>
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-4'>
-        { waterStatus?.sources.map(source => <WaterSourceOverview key={source.id} source={source} />) }
+    waterStatus ? <div className='h-[100%] grid overflow-scroll'>
+      <div className='content-center'>
+        <div className="grid grid-cols-1 m-4">
+          <SystemStatusOverview systemStatus={waterStatus.status} />
+        </div>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-4'>
+          { waterStatus?.sources.map(source => <WaterSourceOverview key={source.id} source={source} />) }
+        </div>
       </div>
     </div> :
     isLoading ? <OnLoading/> : <OnError />
