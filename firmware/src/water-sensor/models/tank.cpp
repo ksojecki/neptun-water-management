@@ -6,7 +6,6 @@ RoundTank::RoundTank(float diameter, float height, Ultrasound* ultrasoundSensor,
     float radius = diameter / 2.0;
     this->volume = PI * radius * radius * this->height; 
     Serial.println("Volume " + String(this->volume * 0.5));
-
 }
 
 float RoundTank::getAmountOfWaterInPercentage() {

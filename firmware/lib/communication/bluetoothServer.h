@@ -2,20 +2,26 @@
 
 #include <NimBLEDevice.h>
 #include "startableService.h"
+#include <list>
+#include "dataField.h"
+#include "bluetoothDataField.h"
 
 using namespace std;
 
 class BluetoothServer : public StartableService { 
     public: 
-        BluetoothServer(string name, string uuid);
+        BluetoothServer(string name);
         void start();
-        bool isConected();
+        void setService(string serviceUuid);
+
+        template<typename T>
+        DataField<T>* setField(string serviceUuid, string name) {
+            return (DataField<T>*) new BluetoothDataField<T>(this->createCharacteristicForService(serviceUuid, name));
+            
+        }
     private:
+        bool isStarted;
         NimBLEServer* server;
-        bool connected;
-        BLEClient* client;
         string name;
-        string serviceUuid;
-        uint16_t connectionHandler;
-    friend class ConnectionCallback;
+        NimBLECharacteristic* createCharacteristicForService(string serviceUuid, string name);
 };
