@@ -2,7 +2,7 @@
 #include "bluetoothServer.h"
 #include <NimBLEDevice.h>
 
-#define WATER_LEVEL_UUID "00000014-d511-4774-8ec2-b7a3d0cd6140"
+using namespace std;
 
 BluetoothServer::BluetoothServer(string name) 
     : name(name) {
@@ -14,18 +14,25 @@ BluetoothServer::BluetoothServer(string name)
 }
 
 void BluetoothServer::start() {
-    this->isStarted = true;
-}
+    for (const string uuid : servicesUuid) {
+        Serial.println(uuid.c_str());
+        this->server->getServiceByUUID(uuid)->start();
+        this->server->getAdvertising()->addServiceUUID(uuid);
+    }
 
-void BluetoothServer::setService(string serviceUuid) {
-    NimBLEService *service = this->server->createService(serviceUuid);
-    service->start();
-    this->server->getAdvertising()->addServiceUUID(serviceUuid);
-    this->server->getAdvertising()->start();
+    this->server->getAdvertising()->start(0);
 }
 
 NimBLECharacteristic* BluetoothServer::createCharacteristicForService(string serviceUuid, string name) {
-    NimBLEService *service = this->server->getServiceByUUID(serviceUuid);
+    NimBLEService *service;
+    this->server->getServiceByUUID(serviceUuid);
+
+    if (service == nullptr) {
+        service = this->server->createService(serviceUuid);
+        this->servicesUuid.push_back(serviceUuid);
+    }
+    
+    service = this->server->getServiceByUUID(serviceUuid);
     NimBLECharacteristic *characteristic = service->createCharacteristic(name);
     return characteristic;
 }

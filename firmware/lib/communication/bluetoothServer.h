@@ -12,16 +12,15 @@ class BluetoothServer : public StartableService {
     public: 
         BluetoothServer(string name);
         void start();
-        void setService(string serviceUuid);
 
         template<typename T>
         DataField<T>* setField(string serviceUuid, string name) {
             return (DataField<T>*) new BluetoothDataField<T>(this->createCharacteristicForService(serviceUuid, name));
-            
         }
     private:
         bool isStarted;
         NimBLEServer* server;
         string name;
         NimBLECharacteristic* createCharacteristicForService(string serviceUuid, string name);
+        vector<string> servicesUuid;
 };

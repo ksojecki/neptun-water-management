@@ -5,7 +5,6 @@ enum WaterLevel {
     FULL
 };
 
-
 class RoundTank {
     public: 
         RoundTank(float diameter, float height, Ultrasound* ultrasoundSensor, float sensorOffset = 0.2);
