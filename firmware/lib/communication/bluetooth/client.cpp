@@ -1,4 +1,4 @@
-#include "bluetoothClient.h"
+#include "client.h"
 #include <NimBLEDevice.h>
 
 using namespace std;
@@ -9,9 +9,7 @@ using namespace std;
 
 NimBLEUUID serviceUuid(BLUETOOTH_SERVICE_UUID);
 
-using namespace std;
-
-void BluetoothClient::connect()
+void Bluetooth::Client::connect()
 {
     NimBLEDevice::init("Controller");
     NimBLEDevice::setDefaultPhy(BLE_GAP_LE_PHY_CODED_MASK, BLE_GAP_LE_PHY_CODED_MASK);

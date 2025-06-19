@@ -1,7 +1,6 @@
 #include <Arduino.h>
-#include <bluetoothServer.h>
+#include <bluetooth/client.h>
 #include <dataField.h>
-#include <bluetoothClient.h>
 
 #define BLUETOOTH_SERVICE_UUID "772b9c75-c4b4-4a88-8419-10e80bece60f"
 #define BLUETOOTH_DEVICE_NAME "NEPTUN_WATER_LEVEL_SENSOR"
@@ -10,7 +9,6 @@
 #define ULTRASOUND_TRIGGER_PIN 1
 #define ULTRASOUND_ECHO_PIN 3
 
-BluetoothServer *bluetooth;
 DataField<float> *waterLevel;
 using namespace std;
 
@@ -23,7 +21,7 @@ void setup()
     // Wait 1 second for initialize of serial protocol for debug purpose
     delay(2000);
     Serial.println("Controller is ready");
-    BluetoothClient* client = new BluetoothClient();
+    Bluetooth::Client* client = new Bluetooth::Client();
     client->connect();
 }
 

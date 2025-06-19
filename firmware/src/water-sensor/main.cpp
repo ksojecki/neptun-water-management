@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <bluetoothServer.h>
+#include <bluetooth/server.h>
 #include "sensors/ultrasound.h"
 #include "models/tank.h"
 #include <dataField.h>
@@ -12,7 +12,7 @@
 #define ULTRASOUND_TRIGGER_PIN 1
 #define ULTRASOUND_ECHO_PIN 3
 
-BluetoothServer *bluetooth;
+Bluetooth::Server *bluetoothServer;
 Ultrasound *ultrasound;
 RoundTank *tank;
 DataField<float> *waterLevel;
@@ -29,9 +29,9 @@ void setup()
     Serial.println("hello");
     ultrasound = new Ultrasound(ULTRASOUND_TRIGGER_PIN, ULTRASOUND_ECHO_PIN);
     tank = new RoundTank(0.65, 0.89, ultrasound);
-    bluetooth = new BluetoothServer(BLUETOOTH_DEVICE_NAME);
-    waterLevel = bluetooth->setField<float>(BLUETOOTH_SERVICE_UUID, WATER_LEVEL_UUID);
-    bluetooth->start();
+    bluetoothServer = new Bluetooth::Server(BLUETOOTH_DEVICE_NAME);
+    waterLevel = (DataField<float>*) bluetoothServer->setField<float>(BLUETOOTH_SERVICE_UUID, WATER_LEVEL_UUID);
+    bluetoothServer->start();
 
     Serial.println("Water tank capacity: " + String(tank->getVolumne()) + " m^3");
 }
@@ -43,7 +43,7 @@ void loop()
     float squareMeters = tank->getAmountOfWaterInSquareMeters();
     Serial.println("Water level in percentage: " + String(percentage * 100) + "%");
     waterLevel->set(percentage);
-    Serial.println("Colected water " + String(squareMeters) + " m^3");
+    Serial.println("Collected water " + String(squareMeters) + " m^3");
     Serial.print("Time: ");
     Serial.println(millis());
 }

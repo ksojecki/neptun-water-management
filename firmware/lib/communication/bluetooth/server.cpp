@@ -1,10 +1,10 @@
 #include <Arduino.h>
-#include "bluetoothServer.h"
+#include "server.h"
 #include <NimBLEDevice.h>
 
 using namespace std;
 
-BluetoothServer::BluetoothServer(string name) 
+Bluetooth::Server::Server(string name) 
     : name(name) {
     NimBLEDevice::init(this->name);
     this->server = NimBLEDevice::createServer();
@@ -13,7 +13,7 @@ BluetoothServer::BluetoothServer(string name)
     Serial.println("Bluetooth started");
 }
 
-void BluetoothServer::start() {
+void Bluetooth::Server::start() {
     for (const string uuid : servicesUuid) {
         Serial.println(uuid.c_str());
         this->server->getServiceByUUID(uuid)->start();
@@ -23,7 +23,7 @@ void BluetoothServer::start() {
     this->server->getAdvertising()->start(0);
 }
 
-NimBLECharacteristic* BluetoothServer::createCharacteristicForService(string serviceUuid, string name) {
+NimBLECharacteristic* Bluetooth::Server::createCharacteristicForService(string serviceUuid, string name) {
     NimBLEService *service;
     this->server->getServiceByUUID(serviceUuid);
 
