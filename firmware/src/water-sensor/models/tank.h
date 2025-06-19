@@ -9,7 +9,7 @@ class RoundTank {
     public: 
         RoundTank(float diameter, float height, Ultrasound* ultrasoundSensor, float sensorOffset = 0.2);
         /**
-         * Ontains water level from snesors and return fill percentage (0.0 - 1.0)
+         * Contains water level from sensors and return fill percentage (0.0 - 1.0)
          * @return float - percentage of water in tank
          */
         float getAmountOfWaterInPercentage();
@@ -19,7 +19,7 @@ class RoundTank {
          */
         float getAmountOfWaterInSquareMeters();
 
-        float getVolumne() {
+        float getVolume() {
             return this->volume;
         }
     private:

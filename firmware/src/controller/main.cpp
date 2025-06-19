@@ -21,8 +21,8 @@ void setup()
     // Wait 1 second for initialize of serial protocol for debug purpose
     delay(2000);
     Serial.println("Controller is ready");
-    Bluetooth::Client* client = new Bluetooth::Client();
-    client->connect();
+    Bluetooth::Client* client = new Bluetooth::Client("b");
+    client->connect("a");
 }
 
 void loop()

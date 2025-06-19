@@ -23,5 +23,5 @@ namespace Bluetooth {
             string name;
             NimBLECharacteristic* createCharacteristicForService(string serviceUuid, string name);
             vector<string> servicesUuid;
-};
+    };
 }

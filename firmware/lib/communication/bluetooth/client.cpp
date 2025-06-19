@@ -9,13 +9,15 @@ using namespace std;
 
 NimBLEUUID serviceUuid(BLUETOOTH_SERVICE_UUID);
 
-void Bluetooth::Client::connect()
-{
-    NimBLEDevice::init("Controller");
+Bluetooth::Client::Client(string name): name(name) {
+    NimBLEDevice::init(name);
     NimBLEDevice::setDefaultPhy(BLE_GAP_LE_PHY_CODED_MASK, BLE_GAP_LE_PHY_CODED_MASK);
     NimBLEDevice::setPower(ESP_PWR_LVL_P21);
+}
 
-    NimBLEUUID serviceUuid(BLUETOOTH_SERVICE_UUID);
+void Bluetooth::Client::connect(string uuid)
+{
+    NimBLEUUID serviceUuid(uuid);
 
     NimBLEScan *pScan = NimBLEDevice::getScan();
     NimBLEScanResults results = pScan->getResults(10 * 1000);
@@ -23,7 +25,6 @@ void Bluetooth::Client::connect()
     for (int i = 0; i < results.getCount(); i++)
     {
         const NimBLEAdvertisedDevice *device = results.getDevice(i);
-        Serial.println(".");
 
         if (device->isAdvertisingService(serviceUuid))
         {
@@ -35,6 +36,7 @@ void Bluetooth::Client::connect()
                 break;
             }
             pClient->setConnectTimeout(10 * 1000);
+
             if (pClient->connect(device))
             {
                 Serial.println("Connected");
@@ -44,8 +46,8 @@ void Bluetooth::Client::connect()
                 {
                     Serial.println("Characteristic");
                     std::vector<NimBLERemoteCharacteristic*> results = pService->getCharacteristics();
-                    for (const NimBLERemoteCharacteristic* characterisic : results) {
-                        Serial.println(characterisic->getUUID().toString().c_str());
+                    for (const NimBLERemoteCharacteristic* characteristic : results) {
+                        Serial.println(characteristic->getUUID().toString().c_str());
                     }
 
                     NimBLERemoteCharacteristic *pCharacteristic = pService->getCharacteristic(WATER_LEVEL_UUID);

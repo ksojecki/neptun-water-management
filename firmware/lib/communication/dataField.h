@@ -6,6 +6,11 @@
 
 using namespace std;
 
+enum PayloadType {
+    INT,
+    FLOAT
+};
+
 template <class T>
 class DataField {
     public: 

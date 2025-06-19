@@ -7,7 +7,6 @@ namespace Bluetooth {
     class Client {
         public: 
             Client(string name);
-            void connect(string serviceUuid);
         private:
             string name;
     };
