@@ -12,10 +12,16 @@ enum PayloadType {
 };
 
 template <class T>
-class DataField {
+class ReadOnlyDataField {
+    public: 
+        virtual ~ReadOnlyDataField() = default;
+        virtual T get() = 0;
+        virtual void subscribe(void (*callback)(T) = 0);
+};
+
+template <class T>
+class DataField : public ReadOnlyDataField<T> {
     public: 
         virtual ~DataField() = default;
         virtual void set(T value) = 0;
-        virtual T get() = 0;
-        virtual void subscribe(void (*callback)(T) = 0);
 };

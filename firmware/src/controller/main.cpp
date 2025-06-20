@@ -1,9 +1,9 @@
 #include <Arduino.h>
 #include <bluetooth/client.h>
 #include <dataField.h>
+#include <tank.h>
 
-#define BLUETOOTH_SERVICE_UUID "772b9c75-c4b4-4a88-8419-10e80bece60f"
-#define BLUETOOTH_DEVICE_NAME "NEPTUN_WATER_LEVEL_SENSOR"
+#define BLUETOOTH_DEVICE_NAME "NEPTUN_CONTROLLER"
 
 #define LED_PIN 0
 #define ULTRASOUND_TRIGGER_PIN 1
@@ -11,6 +11,14 @@
 
 DataField<float> *waterLevel;
 using namespace std;
+using namespace DataContract;
+
+Bluetooth::ConnectedDataContracts<Tank> tanks;
+Bluetooth::Client* client;
+
+void connect() {
+    tanks = client->connect<Tank>(Tank::serviceUuid);
+}
 
 void setup()
 {
@@ -21,12 +29,20 @@ void setup()
     // Wait 1 second for initialize of serial protocol for debug purpose
     delay(2000);
     Serial.println("Controller is ready");
-    Bluetooth::Client* client = new Bluetooth::Client("b");
-    client->connect("a");
+    Bluetooth::Client* client = new Bluetooth::Client(BLUETOOTH_DEVICE_NAME);
+    tanks = client->connect<Tank>(Tank::serviceUuid);
 }
 
 void loop()
 {
     delay(2000);
-    Serial.println(millis());
+    if(tanks.size() == 0) {
+        connect();
+    }
+    Serial.print("\n");
+    Serial.print(millis());
+    Serial.println(":\tDevices:");
+    for (auto const& [address, tank] : tanks) {
+        Serial.printf("Address %s, Capacity %f collected: %f\n", address.c_str(), tank->capacity()->get(), tank->filled()->get());
+    }
 }

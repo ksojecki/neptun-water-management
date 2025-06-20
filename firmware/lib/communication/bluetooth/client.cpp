@@ -15,52 +15,40 @@ Bluetooth::Client::Client(string name): name(name) {
     NimBLEDevice::setPower(ESP_PWR_LVL_P21);
 }
 
-void Bluetooth::Client::connect(string uuid)
+Bluetooth::DeviceList Bluetooth::Client::scanForDevicesWithService(string uuid)
 {
     NimBLEUUID serviceUuid(uuid);
+    NimBLEScanResults scanResult = NimBLEDevice::getScan()->getResults(10 * 1000);
 
-    NimBLEScan *pScan = NimBLEDevice::getScan();
-    NimBLEScanResults results = pScan->getResults(10 * 1000);
+    Bluetooth::DeviceList deviceMap = {};
 
-    for (int i = 0; i < results.getCount(); i++)
-    {
-        const NimBLEAdvertisedDevice *device = results.getDevice(i);
-
+    for (const NimBLEAdvertisedDevice* device : scanResult) {
         if (device->isAdvertisingService(serviceUuid))
         {
-            NimBLEClient *pClient = NimBLEDevice::createClient();
+            NimBLEClient* client = NimBLEDevice::createClient();
             Serial.println("Found sensor ");
+            client->setConnectTimeout(10 * 1000);
 
-            if (!pClient)
-            { // Make sure the client was created
-                break;
-            }
-            pClient->setConnectTimeout(10 * 1000);
-
-            if (pClient->connect(device))
+            string deviceAddress = device->getAddress().toString();
+            
+            if (client->connect(device))
             {
                 Serial.println("Connected");
-                NimBLERemoteService *pService = pClient->getService(serviceUuid);
-
-                if (pService != nullptr)
-                {
-                    Serial.println("Characteristic");
-                    std::vector<NimBLERemoteCharacteristic*> results = pService->getCharacteristics();
-                    for (const NimBLERemoteCharacteristic* characteristic : results) {
-                        Serial.println(characteristic->getUUID().toString().c_str());
-                    }
-
-                    NimBLERemoteCharacteristic *pCharacteristic = pService->getCharacteristic(WATER_LEVEL_UUID);
-
-                    if (pCharacteristic != nullptr)
-                    {
-                        float value = pCharacteristic->readValue<float>();
-                        Serial.println("Value: " + String(value));
-                    }
-                }
-            } else {
-                Serial.println(pClient->getLastError());
+                deviceMap[deviceAddress] = this->extractService(client->getService(serviceUuid));
             }
         }
     }
+    return deviceMap;
+}
+
+Bluetooth::MappedCharacteristic Bluetooth::Client::extractService(NimBLERemoteService* service) {
+    MappedCharacteristic characteristicMap = {};
+    std::vector<NimBLERemoteCharacteristic*> results = service->getCharacteristics(true);
+    
+    for (NimBLERemoteCharacteristic* characteristic : results) {
+        std::string uuid = characteristic->getUUID().toString();
+        characteristicMap[uuid] = characteristic;
+    }
+
+    return characteristicMap;
 }

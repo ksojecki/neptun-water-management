@@ -1,12 +1,17 @@
+#pragma once
 #include "bluetooth/server.h"
 #include "bluetooth/client.h"
 
+using namespace std;
+
 namespace Bluetooth {
+
     class DataContract {
-        protected: 
-            DataContract() {};
         public: 
-            DataContract(Bluetooth::Server* server) {};
-            DataContract(Bluetooth::Client* client) {};
-        };
+            DataContract(Server* server) {}
+            DataContract(MappedCharacteristic client) {}
+            static const string serviceUuid;
+        protected: 
+            DataContract() {}
+    };
 }

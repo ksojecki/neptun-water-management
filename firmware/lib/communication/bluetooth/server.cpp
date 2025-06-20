@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "server.h"
 #include <NimBLEDevice.h>
 
@@ -10,7 +9,6 @@ Bluetooth::Server::Server(string name)
     this->server = NimBLEDevice::createServer();
     NimBLEDevice::setDefaultPhy(BLE_GAP_LE_PHY_CODED_MASK, BLE_GAP_LE_PHY_CODED_MASK);
     NimBLEDevice::setPower(ESP_PWR_LVL_P21);
-    Serial.println("Bluetooth started");
 }
 
 void Bluetooth::Server::start() {
@@ -36,5 +34,3 @@ NimBLECharacteristic* Bluetooth::Server::createCharacteristicForService(string s
     NimBLECharacteristic *characteristic = service->createCharacteristic(name);
     return characteristic;
 }
-
-
