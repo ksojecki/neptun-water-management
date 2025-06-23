@@ -17,8 +17,10 @@ void Bluetooth::Server::start() {
         this->server->getServiceByUUID(uuid)->start();
         this->server->getAdvertising()->addServiceUUID(uuid);
     }
+}
 
-    this->server->getAdvertising()->start(0);
+void Bluetooth::Server::advertise() {
+    this->server->getAdvertising()->start(60 * 1000);
 }
 
 NimBLECharacteristic* Bluetooth::Server::createCharacteristicForService(string serviceUuid, string name) {

@@ -12,6 +12,7 @@ namespace Bluetooth {
         public: 
             Server(string name);
             void start();
+            void advertise();
 
             template<typename T>
             DataField<T>* setField(string serviceUuid, string name) {
