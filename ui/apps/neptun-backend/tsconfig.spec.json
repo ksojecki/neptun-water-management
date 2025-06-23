@@ -6,6 +6,12 @@
     "moduleResolution": "nodenext",
     "types": ["jest", "node"]
   },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "ESNext",
+      "moduleResolution": "Node"
+    }
+  },
   "include": [
     "jest.config.ts",
     "src/**/*.test.ts",
