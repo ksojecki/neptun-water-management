@@ -4,10 +4,10 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/neptun-ui"
+      "path": "./apps/ui"
     },
     {
-      "path": "./apps/neptun-backend"
+      "path": "./apps/backend"
     },
     {
       "path": "./libs/data-model"

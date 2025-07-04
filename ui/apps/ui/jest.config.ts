@@ -1,5 +1,5 @@
 export default {
-  displayName: '@neptun/neptun-ui',
+  displayName: '@neptun/ui',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   transform: {

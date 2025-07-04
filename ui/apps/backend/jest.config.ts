@@ -1,5 +1,5 @@
 export default {
-  displayName: '@neptun/neptun-backend',
+  displayName: '@neptun/backend',
   preset: '../../jest.preset.js',
   testEnvironment: 'node',
   transform: {

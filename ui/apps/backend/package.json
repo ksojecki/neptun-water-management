@@ -1,5 +1,5 @@
 {
-  "name": "@neptun/neptun-backend",
+  "name": "@neptun/backend",
   "version": "0.0.1",
   "private": true,
   "nx": {
@@ -12,15 +12,15 @@
           "build"
         ],
         "options": {
-          "buildTarget": "@neptun/neptun-backend:build",
+          "buildTarget": "@neptun/backend:build",
           "runBuildTargetDependencies": false
         },
         "configurations": {
           "development": {
-            "buildTarget": "@neptun/neptun-backend:build:development"
+            "buildTarget": "@neptun/backend:build:development"
           },
           "production": {
-            "buildTarget": "@neptun/neptun-backend:build:production"
+            "buildTarget": "@neptun/backend:build:production"
           }
         }
       },
