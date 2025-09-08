@@ -33,5 +33,5 @@ jobs:
 
       - uses: nrwl/nx-set-shas@v4
 
-      - run: npx nx affected -t run-many -t build,lint
+      - run: npx nx affected -t run-many -t build,lint,test
         working-directory: ./ui
