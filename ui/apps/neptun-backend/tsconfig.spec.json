@@ -2,13 +2,13 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./out-tsc/jest",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "types": ["jest", "node"]
   },
   "ts-node": {
     "compilerOptions": {
-      "module": "ESNext",
+      "module": "commonjs",
       "moduleResolution": "Node"
     }
   },
