@@ -1,13 +1,13 @@
-import { SourceType, Tank, WaterLevel, WaterSource } from "@neptun/data-model";
+import { Tank, WaterSource } from "@neptun/data-model";
 import { JSX } from "react";
 import { FaRegSun, FaCloudRain } from "react-icons/fa6";
 
 export function WaterSourceOverview(properties: { source: WaterSource, className?: string }): JSX.Element {
     const source = properties.source;
-    const colours = source.type === SourceType.Rain && source.isConnected ? 'bg-info text-info-content' : 
+    const colours = source.type === 'rain' && source.isConnected ? 'bg-info text-info-content' :
         source.isConnected ? 'bg-primary text-primary-content' : 'bg-base-300 text-base-content';
-    const animation = (source.type === SourceType.Tank && source.isRefilled) || (
-        source.type === SourceType.Rain && source.isConnected 
+    const animation = (source.type === 'tank' && source.isRefilled) || (
+        source.type === 'rain' && source.isConnected
     ) ? 'animate-pulse' : '';
     const defaultClasses = `${colours} ${animation} p-4 rounded-md`;
 
@@ -16,29 +16,29 @@ export function WaterSourceOverview(properties: { source: WaterSource, className
             <div className="flex">
                 <div className="flex-auto">
                     <h1 className='text-xl grow'>{properties.source.name}</h1>
-                    { source.type === SourceType.Tank && <TankDetails tank={source} /> }
+                    { source.type === 'tank'&& <TankDetails tank={source} /> }
                 </div>
                 <div className="flex-none">
                     <SidePanel source={source} />
                 </div>
             </div>
-        </div> 
+        </div>
     )
 }
 
 export function SidePanel( properties: { source: WaterSource }): JSX.Element {
     const source = properties.source;
-    if (source.type === SourceType.Tank) {
+    if (source.type === 'tank') {
         const percentage = source.filledCapacity / source.maxCapacity * 100;
         return <WaterLevelDisplay percentage={percentage} />
     }
-    if (source.type === SourceType.Well) {
-        const percentage = source.waterLevel === WaterLevel.Empty ? 0 : 
-            source.waterLevel === WaterLevel.Medium ? 50 : 100;
+    if (source.type === 'well') {
+        const percentage = source.waterLevel === 'empty' ? 0 :
+            source.waterLevel === 'medium' ? 50 : 100;
         return <WaterLevelDisplay percentage={percentage} label={source.waterLevel as string}/>
     }
 
-    if (source.type === SourceType.Rain) {
+    if (source.type === 'rain') {
         return <RainStatus isRaining={source.isConnected} />
     }
 
@@ -47,7 +47,7 @@ export function SidePanel( properties: { source: WaterSource }): JSX.Element {
 
 export function WaterLevelDisplay(properties: { percentage: number, label?: string }): JSX.Element {
     const label = properties.label || `${Math.round(properties.percentage)}%`;
-    return <div className="radial-progress" style={{ "--value": properties.percentage, '--size': '7rem' } as React.CSSProperties  } 
+    return <div className="radial-progress" style={{ "--value": properties.percentage, '--size': '7rem' } as React.CSSProperties  }
         aria-valuenow={properties.percentage} role="progressbar">{label}</div>
 }
 

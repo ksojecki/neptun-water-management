@@ -1,10 +1,10 @@
-import { SourceType, SystemState, SystemStatus, WaterLevel, WaterSource } from "@neptun/data-model"
+import { type SystemState, type WaterSource } from "@neptun/data-model"
 
 const sources: WaterSource[] = [
     {
         name: 'Rain',
         id: "rain",
-        type: SourceType.Rain,
+        type: 'rain',
         isConnected: false
     },
     {
@@ -12,8 +12,8 @@ const sources: WaterSource[] = [
         isConnected: false,
         isRefilled: true,
         name: "Main Tank",
-        type: SourceType.Tank,
-        waterLevel: WaterLevel.Medium,
+        type: 'tank',
+        waterLevel: 'medium',
         maxCapacity: 0.3,
         filledCapacity: 0.14
     },
@@ -21,14 +21,14 @@ const sources: WaterSource[] = [
         id: "well0",
         isConnected: true,
         name: "Well",
-        type: SourceType.Well,
-        waterLevel: WaterLevel.Full
+        type: 'well',
+        waterLevel: 'full'
     }
 ];
 
 export function getCurrentState(): SystemState {
     return {
-        status: SystemStatus.Ready,
+        status: 'Ready',
         sources
     };
 }

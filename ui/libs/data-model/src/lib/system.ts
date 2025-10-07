@@ -5,9 +5,4 @@ export type SystemState = {
     sources: WaterSource[];
 };
 
-export enum SystemStatus {
-    Offline = "Offline",
-    Ready = "Ready",
-    NoWater = "No water",
-    Filling = "Filling tanks"
-}
+export type SystemStatus = 'Offline' | 'Ready' | 'NoWater' | 'FillingTanks';

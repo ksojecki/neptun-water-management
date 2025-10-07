@@ -1,12 +1,7 @@
-export type WaterSource = Tank | Well | Rain | SurfaceWaterSource;
+export type SourceType = 'well' | 'tank' | 'rain' | 'river' | 'lake';
+export type WaterLevel = 'empty' | 'medium' | 'full';
 
-export enum SourceType {
-    Well = "well",
-    Tank = "tank",
-    Rain = "rain",
-    River = "river",
-    Lake = "lake"
-}
+export type WaterSource = Tank | Well | Rain | SurfaceWaterSource;
 
 export interface Source {
     id: string;
@@ -20,7 +15,7 @@ export interface MeasurableSource extends Source {
 }
 
 export interface Tank extends MeasurableSource {
-    type: SourceType.Tank;
+    type: 'tank';
     isConnected: boolean;
     isRefilled: boolean;
     maxCapacity: number;
@@ -28,19 +23,13 @@ export interface Tank extends MeasurableSource {
 }
 
 export interface Well extends MeasurableSource {
-    type: SourceType.Well;
+    type: 'well';
 }
 
 export interface Rain extends Source {
-    type: SourceType.Rain;
+    type: 'rain';
 }
 
 export interface SurfaceWaterSource extends Source {
-    type: SourceType.River | SourceType.Lake;
-}
-
-export enum WaterLevel {
-    Empty = 'empty',
-    Medium = 'medium',
-    Full = 'full'
+    type: 'river' | 'lake'
 }
