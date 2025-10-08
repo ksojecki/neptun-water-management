@@ -14,8 +14,6 @@
   ],
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "moduleResolution": "bundler",
-    "types": ["@react-router/node"]
+    "jsx": "react-jsx"
   }
 }
