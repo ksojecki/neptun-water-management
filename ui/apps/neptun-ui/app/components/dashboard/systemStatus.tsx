@@ -6,8 +6,8 @@ export function SystemStatusOverview(properties: { systemStatus: SystemStatus}) 
         properties.systemStatus === 'FillingTanks' ? 'bg-info text-info-content' :
         properties.systemStatus === 'NoWater' ? 'bg-warning text-warning-content' :
         properties.systemStatus === 'Offline' ? 'bg-error text-error-content' : '';
-    const baseClases = `${colours} rounded-xl p-4 flex gap-4`
-    return <div className={baseClases}>
+    const baseClasses = `${colours} rounded-xl p-4 flex gap-4`
+    return <div className={baseClasses}>
         <div className='grow'>
             <h1 className='text-xl'><b>{properties.systemStatus}</b></h1>
         </div>

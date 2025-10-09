@@ -11,7 +11,10 @@
     "forceConsistentCasingInFileNames": true,
     "rootDir": "app",
     "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "paths": {
+      "@ui/*": ["./app/ui/*"]
+    }
   },
   "include": [
     "app/**/*.ts",
