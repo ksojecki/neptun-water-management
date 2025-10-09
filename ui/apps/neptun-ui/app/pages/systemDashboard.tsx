@@ -2,15 +2,16 @@
 // import styles from './app.module.css';
 
 import { ReactNode } from 'react';
-import { WaterSourceOverview } from '../water-source';
-import { SystemStatusOverview } from '../system-status';
+import { WaterSourceOverview } from '../components/dashboard/waterSource';
+import { SystemStatusOverview } from '../components/dashboard/systemStatus';
 import { useSystemState } from '../api/clientApi';
 
 export function SystemDashboard() {
-  const { systemState, error, isLoading } = useSystemState();
+  const { systemState, queryState } = useSystemState();
 
-  if ( isLoading ) return <OnLoading />;
-  if ( error || systemState === null ) return <OnError />;
+  if ( queryState === 'loading' ) return <OnLoading />;
+  if ( queryState === 'error' ) return <OnError />;
+
 
   return (
     <div className='h-[100%] grid overflow-scroll'>
