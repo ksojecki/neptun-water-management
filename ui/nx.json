@@ -82,6 +82,13 @@
         "buildDepsTargetName": "build-deps",
         "watchDepsTargetName": "watch-deps"
       }
+    },
+    {
+      "plugin": "@nx-tools/nx-container",
+      "options": {
+        "defaultEngine": "podman",
+        "defaultRegistry": "docker.io"
+      }
     }
   ],
   "targetDefaults": {
@@ -105,5 +112,5 @@
         "linter": "eslint"
       }
     }
-  }
+  },
 }
