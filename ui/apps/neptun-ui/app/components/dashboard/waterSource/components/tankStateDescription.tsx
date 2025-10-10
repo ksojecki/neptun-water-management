@@ -1,6 +1,6 @@
 import { Tank } from '@neptun/data-model';
 
-export function Details(properties: { tank: Tank }) {
+export function TankStateDescription(properties: { tank: Tank }) {
   const tank = properties.tank;
   return <div className="flex flex-col">
     <div className="text-sm">Capacity: {tank.maxCapacity} m³</div>

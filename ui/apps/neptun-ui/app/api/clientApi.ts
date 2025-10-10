@@ -27,7 +27,7 @@ const query = async <T>(endpoint: string):Promise<T> => {
   }
 }
 
-type QueryState = 'loading' | 'error' | 'success'
+type QueryState = 'loading' | 'error' | 'success';
 
 const useQuery = <T>(endpoint:string, refresh: number) => {
   const [data, setData] = useState<T>();
