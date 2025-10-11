@@ -11,6 +11,9 @@
     },
     {
       "path": "./libs/data-model"
+    },
+    {
+      "path": "./libs/app-toolkit"
     }
   ]
 }

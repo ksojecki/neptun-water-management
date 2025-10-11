@@ -11,8 +11,6 @@ db.createUser(
   }
 );
 
-db.createCollection('users', { capped: false });
+db.createCollection('settings', { capped: false });
 
-db.users.insert([
-  { "username": "admin", "password": "21232f297a57a5a743894a0e4a801fc3" },
-]);
+db.settings.insert({ id: 'schema', schemaVersion: 0 });

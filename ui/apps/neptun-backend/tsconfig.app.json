@@ -21,6 +21,9 @@
   ],
   "references": [
     {
+      "path": "../../libs/app-toolkit/tsconfig.lib.json"
+    },
+    {
       "path": "../../libs/data-model/tsconfig.lib.json"
     }
   ]
