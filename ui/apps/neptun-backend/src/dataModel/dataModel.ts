@@ -1,16 +1,17 @@
-import { hashPassword, User } from './users';
+import { hashPassword } from './users';
 import { Collection, Db } from 'mongodb';
 import { Settings } from './settings';
+import { User } from '@neptun/data-model';
 
 const CLEAN_SCHEMA = 0;
 const SUPPORTED_SCHEMA = 1;
 
-export type Model = {
+export type DataModel = {
   readonly users: Collection<User>;
   readonly settings: Collection<Settings>;
 }
 
-export async function prepareDataModel(db: Db): Promise<Model> {
+export async function prepareDataModel(db: Db): Promise<DataModel> {
   const currentSchema = await getSchemaVersion(db);
 
   if (currentSchema > SUPPORTED_SCHEMA) {
@@ -55,10 +56,6 @@ async function migrateSchema(currentSchema: number, db: Db) {
     const settings = db.collection('settings');
     await settings.createIndex({ id: 'text' }, { unique: true });
     await settings.findOneAndUpdate({ id: 'schema' }, { $set: { schemaVersion: 1 }})
-
-    db.collection('users');
-
-    db.collection('settings');
   }
 }
 

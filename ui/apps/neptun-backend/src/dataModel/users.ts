@@ -1,13 +1,5 @@
 import crypto from 'crypto';
-
-export type User = {
-  username: string;
-  password: string;
-  email: string;
-  forceChangePassword: boolean;
-}
-
-export type AuthCredentials = Pick<User, 'username' | 'password'>;
+import { AuthCredentials } from '@neptun/data-model';
 
 export function hashPassword(data: AuthCredentials): AuthCredentials {
   return {
