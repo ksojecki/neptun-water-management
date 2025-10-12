@@ -1,7 +1,7 @@
 import { WaterSource as WaterSourceDto } from "@neptun/data-model";
 import { JSX } from "react";
-import { TankStateDescription } from './components';
-import { Visualisation } from './components';
+import { TankStateDescription } from './tankStateDescription';
+import { Visualisation } from './visualisation';
 
 export function WaterSource(properties: { source: WaterSourceDto, className?: string }): JSX.Element {
     const source = properties.source;

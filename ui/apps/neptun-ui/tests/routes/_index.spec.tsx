@@ -2,7 +2,7 @@
 
 import { createRoutesStub } from 'react-router';
 import { render, screen, waitFor } from '@testing-library/react';
-import SystemDashboard from '../../app/pages/systemDashboard';
+import DashboardPage from '../../app/dashboard/dashboardPage';
 
 global.fetch = jest.fn();
 
@@ -16,7 +16,7 @@ test('Render main page', async () => {
   const ReactRouterStub = createRoutesStub([
     {
       path: '/',
-      Component: SystemDashboard,
+      Component: DashboardPage,
     },
   ]);
 

@@ -7,8 +7,8 @@ import {
   type MetaFunction,
   type LinksFunction,
 } from 'react-router';
-
-import { AppNav } from './app-nav';
+import { AuthenticationProvider } from './context/authentication';
+import { CenterLayout } from '@ui/layout/centerLayout';
 
 export const meta: MetaFunction = () => [
   {
@@ -40,10 +40,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className='h-dvh'>
-        <AppNav />
-        {children}
+      <div className="app-navigation"></div>
+      <AuthenticationProvider>
+        <CenterLayout>
+          {children}
+        </CenterLayout>
         <ScrollRestoration />
         <Scripts />
+      </AuthenticationProvider>
       </body>
     </html>
   );

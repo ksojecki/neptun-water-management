@@ -1,9 +1,25 @@
-import { Router } from 'express';
+import { Handler, Router } from 'express';
 import { hashPassword } from '../dataModel/users';
-import { AuthCredentials } from '@neptun/data-model';
+import {
+  ApiError,
+  AuthCredentials,
+  AuthenticationResponse,
+  User,
+  UserInfo,
+} from '@neptun/data-model';
 import { dataModel } from '../dataModel/dataModel';
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 import { AppSettings } from '../settings';
+
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Express {
+    export interface Request {
+      user?: Omit<User, 'password'>;
+    }
+  }
+}
 
 const router = Router();
 
@@ -16,21 +32,50 @@ router.post('/get-token', async (req, res) => {
     res.json({ error: 'unauthorized', message: 'Invalid credentials' });
     return;
   }
-  const data = {q
+
+  const userInfo: UserInfo = {
     username: user.username,
     email: user.email,
-    changePassword: user.forceChangePassword
+    forceChangePassword: user.forceChangePassword
   };
-  const token = sign(data, AppSettings.AUTHENTICATION_SECRET,
-    {
-      expiresIn: '1h',
-      audience: user.forceChangePassword ? 'change-password' : 'neptun-ui'
-    });
-  res.json({ data, token });
+
+  const response: AuthenticationResponse = {
+    type: 'success',
+    user: userInfo,
+    token: sign(user, AppSettings.AUTHENTICATION_SECRET,
+      {
+        expiresIn: '1h',
+        audience: user.forceChangePassword ? 'change-password' : 'neptun-ui'
+      })
+  }
+  res.json(response);
 });
 
 router.get('/change-password', async (req, res) => {
   res.json({ message: 'Change password' });
 })
+
+export const useAuthentication: Handler = (request, res, next) => {
+  const authHeader = request.headers.authorization;
+  const hasBearer = authHeader?.startsWith('Bearer ') ?? false;
+
+  if (!hasBearer) {
+    res.status(401).json({ type: 'error', error: 'unauthorized', message: 'Missing token' } satisfies ApiError);
+    return;
+  }
+
+  const token = authHeader?.split(" ")[1] ?? '';
+  try {
+    const data = verify(token, AppSettings.AUTHENTICATION_SECRET);
+    request.user = data as UserInfo;
+    console.log(data);
+  } catch (error) {
+    res.status(401).json({ type: 'error', error: 'unauthorized', message: 'Invalid token' } satisfies ApiError);
+    console.error(error);
+    return;
+  }
+
+  next();
+}
 
 export const authentication = router;

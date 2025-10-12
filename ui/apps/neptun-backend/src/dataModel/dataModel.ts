@@ -57,6 +57,7 @@ async function migrateSchema(currentSchema: number, db: Db) {
     const settings = db.collection('settings');
     await settings.createIndex({ id: 'text' }, { unique: true });
     await settings.findOneAndUpdate({ id: 'schema' }, { $set: { schemaVersion: 1 }})
+    currentSchema++;
   }
 }
 

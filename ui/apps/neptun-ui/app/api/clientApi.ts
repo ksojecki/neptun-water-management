@@ -1,18 +1,13 @@
-import { SystemState } from '@neptun/data-model';
+import { ApiError, SystemState } from '@neptun/data-model';
 import { useQuery } from './query';
 
-const REFRESH_INTERVAL = 1000 * 10;
-
 const OFFLINE_STATE: SystemState = {
+  type: 'success',
   status: 'Offline',
   sources: []
 };
 
-export const useSystemState = (refresh: number = REFRESH_INTERVAL) => {
-  const { data, queryState  } = useQuery<SystemState>('water', refresh);
+export const useSystemState = () => {
+  const { data, queryState  } = useQuery<SystemState | ApiError>({ endpoint: 'state' });
   return { queryState, systemState: data ?? OFFLINE_STATE };
-}
-
-export const authenticate = () => {
-
 }

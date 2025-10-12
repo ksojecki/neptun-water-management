@@ -1,6 +1,5 @@
 import { WaterSource } from '@neptun/data-model';
-import { RadialLevel } from './visualisation/radialLevel';
-import { Rain } from './visualisation/rain';
+import { Rain, RadialLevel } from './levelIndicators';
 
 type VisualStatusProps = { source: WaterSource };
 
