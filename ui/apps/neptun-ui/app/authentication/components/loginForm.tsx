@@ -2,7 +2,8 @@ import { useForm } from 'react-hook-form';
 import { TextInput } from '@ui/forms/textInput';
 import { SubmitButton } from '@ui/forms/submitButton';
 import { AuthCredentials } from '@neptun/data-model';
-import { useAuthentication } from '../../context/authentication';
+import { useAuthentication } from '../../api/authentication';
+import { useNavigate } from 'react-router';
 
 
 
@@ -13,9 +14,12 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm<AuthCredentials>();
 
+  const navigate = useNavigate();
+
   const { login, user } = useAuthentication();
 
   if(user) {
+    navigate('/');
     return <div>You are logged in as {user.username}</div>
   }
 

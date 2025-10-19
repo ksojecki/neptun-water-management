@@ -1,4 +1,4 @@
-import { type SystemState, type WaterSource } from "@neptun/data-model"
+import { ApiResponse, type SystemState, type WaterSource } from "@neptun/data-model"
 
 const sources: WaterSource[] = [
     {
@@ -26,9 +26,12 @@ const sources: WaterSource[] = [
     }
 ];
 
-export function getCurrentState(): SystemState {
+export function getCurrentState(): ApiResponse<SystemState> {
     return {
+      type: 'success',
+      data: {
         status: 'Ready',
         sources
+      },
     };
 }

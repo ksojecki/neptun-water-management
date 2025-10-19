@@ -7,12 +7,12 @@ import {
   type MetaFunction,
   type LinksFunction,
 } from 'react-router';
-import { AuthenticationProvider } from './context/authentication';
+import { AuthenticationProvider } from './api/authentication';
 import { CenterLayout } from '@ui/layout/centerLayout';
 
 export const meta: MetaFunction = () => [
   {
-    title: 'New Nx React Router App',
+    title: 'Neptun',
   },
 ];
 
@@ -41,13 +41,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body className='h-dvh'>
       <div className="app-navigation"></div>
-      <AuthenticationProvider>
         <CenterLayout>
+          <AuthenticationProvider>
           {children}
+          </AuthenticationProvider>
         </CenterLayout>
         <ScrollRestoration />
         <Scripts />
-      </AuthenticationProvider>
       </body>
     </html>
   );

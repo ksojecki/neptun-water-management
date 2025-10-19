@@ -1,7 +1,7 @@
 import { Handler, Router } from 'express';
 import { hashPassword } from '../dataModel/users';
 import {
-  ApiError,
+  UnauthorizedError,
   AuthCredentials,
   AuthenticationResponse,
   User,
@@ -28,15 +28,15 @@ router.post('/get-token', async (req, res) => {
   const user = await dataModel.users.findOne(credentials);
 
   if (!user) {
-    res.status(401).json({ error: 'unauthorized', message: 'Invalid credentials' });
-    res.json({ error: 'unauthorized', message: 'Invalid credentials' });
+    res.status(401)
+      .json({ error: 'unauthorized', message: 'Invalid credentials' });
     return;
   }
 
   const userInfo: UserInfo = {
     username: user.username,
     email: user.email,
-    forceChangePassword: user.forceChangePassword
+    forceChangePassword: false
   };
 
   const response: AuthenticationResponse = {
@@ -60,7 +60,7 @@ export const useAuthentication: Handler = (request, res, next) => {
   const hasBearer = authHeader?.startsWith('Bearer ') ?? false;
 
   if (!hasBearer) {
-    res.status(401).json({ type: 'error', error: 'unauthorized', message: 'Missing token' } satisfies ApiError);
+    res.status(401).json({ type: 'error', error: 'unauthorized', message: 'Missing token' } satisfies UnauthorizedError);
     return;
   }
 
@@ -70,7 +70,7 @@ export const useAuthentication: Handler = (request, res, next) => {
     request.user = data as UserInfo;
     console.log(data);
   } catch (error) {
-    res.status(401).json({ type: 'error', error: 'unauthorized', message: 'Invalid token' } satisfies ApiError);
+    res.status(401).json({ type: 'error', error: 'unauthorized', message: 'Invalid token' } satisfies UnauthorizedError);
     console.error(error);
     return;
   }

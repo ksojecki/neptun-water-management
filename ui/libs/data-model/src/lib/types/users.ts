@@ -1,4 +1,4 @@
-import { ApiError } from './error';
+import { UnauthorizedError } from './response';
 
 export type User = {
   username: string;
@@ -16,4 +16,4 @@ export type SuccessAuthenticationResponse = {
   token: string;
 }
 
-export type AuthenticationResponse = SuccessAuthenticationResponse | ApiError;
+export type AuthenticationResponse = SuccessAuthenticationResponse | UnauthorizedError;

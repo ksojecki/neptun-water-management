@@ -1,9 +1,8 @@
-import { WaterSource } from "./waterSources.js";
+import { WaterSource } from "./waterSources";
 
 export type SystemState = {
     status: SystemStatus;
     sources: WaterSource[];
-    type: 'success'
 };
 
 export type SystemStatus = 'Offline' | 'Ready' | 'NoWater' | 'FillingTanks';

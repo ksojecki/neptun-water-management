@@ -3,17 +3,24 @@ import { reactRouter } from '@react-router/dev/vite';
 import tailwindcss from '@tailwindcss/vite';
 import tsconfigPaths from 'vite-tsconfig-paths'
 
-
 export default defineConfig(() => ({
   root: __dirname,
   cacheDir: '../../node_modules/.vite/apps/neptun-ui',
   server: {
     port: 4200,
     host: 'localhost',
+    https: {
+      key: '/Users/kamilsojecki/.local-dev-cert/dev.pem',
+      cert: '/Users/kamilsojecki/.local-dev-cert/cert.pem'
+    }
   },
   preview: {
     port: 4300,
     host: 'localhost',
+    https: {
+      key: '/Users/kamilsojecki/.local-dev-cert/dev.pem',
+      cert: '/Users/kamilsojecki/.local-dev-cert/cert.pem'
+    }
   },
   plugins: [
     tsconfigPaths(),
