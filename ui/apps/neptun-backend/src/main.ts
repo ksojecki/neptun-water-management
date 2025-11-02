@@ -29,5 +29,4 @@ const httpsServer = https.createServer({
 httpsServer.on('listening', () => console.log(`Listening on port ${port}`));
 httpsServer.on('error', console.error);
 httpsServer.on('clientError', console.error);
-httpsServer.on('connection', () => console.log('New connection'));
 httpsServer.listen(port);

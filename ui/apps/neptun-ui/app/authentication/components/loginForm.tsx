@@ -4,6 +4,7 @@ import { SubmitButton } from '@ui/forms/submitButton';
 import { AuthCredentials } from '@neptun/data-model';
 import { useAuthentication } from '../../api/authentication';
 import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
 
 
 
@@ -17,9 +18,13 @@ export const LoginForm = () => {
   const navigate = useNavigate();
 
   const { login, user } = useAuthentication();
-
+  useEffect(() => {
+    if(user) {
+      navigate('/');
+    }
+  }, [navigate, user]);
   if(user) {
-    navigate('/');
+    // navigate('/');
     return <div>You are logged in as {user.username}</div>
   }
 

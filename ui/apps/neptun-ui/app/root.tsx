@@ -7,8 +7,7 @@ import {
   type MetaFunction,
   type LinksFunction,
 } from 'react-router';
-import { AuthenticationProvider } from './api/authentication';
-import { CenterLayout } from '@ui/layout/centerLayout';
+import { Loading } from '@ui/loading';
 
 export const meta: MetaFunction = () => [
   {
@@ -41,16 +40,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body className='h-dvh'>
       <div className="app-navigation"></div>
-        <CenterLayout>
-          <AuthenticationProvider>
-          {children}
-          </AuthenticationProvider>
-        </CenterLayout>
+        {children}
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   );
+}
+
+export function HydrateFallback() {
+  return <Loading />;
 }
 
 export default function App() {

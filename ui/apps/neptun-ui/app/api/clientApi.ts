@@ -10,10 +10,13 @@ import { useEffect, useState } from 'react';
 type EndpointName = 'state'
 
 const useApi = <T extends object>(endpoint: EndpointName) => {
-  const { token } = useAuthentication();
+  const { token, logout } = useAuthentication();
   const [ error, setError ] = useState<Error | ApiError | undefined>(undefined);
   const [ payload, setPayload ] = useState<T | undefined>(undefined);
-  const { data, queryState, queryError } = useQuery<ApiResponse<T>>({ endpoint, apiToken: token });
+  const { data, queryState, queryError } = useQuery<ApiResponse<T>>({ endpoint,
+    apiToken: token,
+    isEnabled: !!token,
+  });
   useEffect(() => {
     if (queryState === 'idle') {
       setError(undefined);
@@ -32,6 +35,9 @@ const useApi = <T extends object>(endpoint: EndpointName) => {
     }
 
     if (data?.type === 'error') {
+      if (data.error === 'unauthorized') {
+        logout();
+      }
       setError(data);
       return;
     }
@@ -41,7 +47,7 @@ const useApi = <T extends object>(endpoint: EndpointName) => {
       return;
     }
     setError({ name: 'clientApiError', message: 'Invalid data envelope' });
-  }, [data, queryError, queryState]);
+  }, [data, logout, queryError, queryState]);
   return { payload, error };
 }
 

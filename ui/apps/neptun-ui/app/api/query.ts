@@ -14,6 +14,13 @@ interface UseQueryParams<TPayload> extends QueryParams<TPayload> {
   isEnabled?: boolean;
 }
 
+/**
+ * Used to watch changes in data model
+ * @param isEnabled
+ * @param apiToken
+ * @param endpoint
+ * @param body
+ */
 export const useQuery = <TResponse, TPayload = undefined>({
   isEnabled = true,
   apiToken,
@@ -25,13 +32,12 @@ export const useQuery = <TResponse, TPayload = undefined>({
   const [error, setError] = useState<Error | undefined>(undefined);
 
   useEffect(() => {
-    if (!isEnabled) return;
-    if (queryState === 'loading' || queryState === 'received') return;
+    console.log('useQuery', { isEnabled, apiToken, endpoint, body });
+    if (!isEnabled || queryState !== 'idle') return;
 
     setQueryState('loading');
     query<TResponse, TPayload>({ apiToken, endpoint, body })
       .then((data) => {
-        console.log(data);
         setData(data);
       })
       .then(() => {
@@ -46,7 +52,7 @@ export const useQuery = <TResponse, TPayload = undefined>({
   return { data, queryState, queryError: error };
 };
 
-const query = async <TResponse, TPayload>({
+export const query = async <TResponse, TPayload>({
   body,
   endpoint,
   apiToken,

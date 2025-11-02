@@ -33,21 +33,24 @@ router.post('/get-token', async (req, res) => {
     return;
   }
 
-  const userInfo: UserInfo = {
+  const userInfo: Omit<UserInfo, 'token'> = {
     username: user.username,
     email: user.email,
-    forceChangePassword: false
+    forceChangePassword: false,
   };
+
+  console.log(userInfo);
 
   const response: AuthenticationResponse = {
     type: 'success',
-    user: userInfo,
-    token: sign(user, AppSettings.AUTHENTICATION_SECRET,
-      {
+    user: {
+      ...userInfo,
+      token: sign(user, AppSettings.AUTHENTICATION_SECRET, {
         expiresIn: '1h',
-        audience: user.forceChangePassword ? 'change-password' : 'neptun-ui'
+        audience: user.forceChangePassword ? 'change-password' : 'neptun-ui',
       })
-  }
+    }
+  };
   res.json(response);
 });
 
