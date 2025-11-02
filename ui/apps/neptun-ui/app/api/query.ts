@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const API_URL = 'https://localhost:3333/api';
 
@@ -30,18 +30,18 @@ export const useQuery = <TResponse, TPayload = undefined>({
   const [data, setData] = useState<TResponse>();
   const [queryState, setQueryState] = useState<QueryState>('idle');
   const [error, setError] = useState<Error | undefined>(undefined);
+  const timestamp = useRef(0);
 
   useEffect(() => {
-    console.log('useQuery', { isEnabled, apiToken, endpoint, body });
-    if (!isEnabled || queryState !== 'idle') return;
-
+    if (!isEnabled ||
+      queryState !== 'idle' ||
+      Date.now() - timestamp.current < 5000) return;
     setQueryState('loading');
+    timestamp.current = Date.now();
     query<TResponse, TPayload>({ apiToken, endpoint, body })
       .then((data) => {
-        setData(data);
-      })
-      .then(() => {
         setQueryState('received');
+        setData(data);
       })
       .catch((error) => {
         setQueryState('error');

@@ -5,7 +5,6 @@ import { Loading } from '@ui/loading';
 
 export function DashboardPage() {
   const { systemState, error } = useSystemState();
-
   if(error) {
     return <ErrorMessage error={error} />
   }

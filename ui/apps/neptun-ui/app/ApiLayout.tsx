@@ -14,7 +14,6 @@ const AuthWrapper = ({ children }: { children: ReactNode }) => {
     if(isLoading) return;
     if (user) return;
 
-    console.log(navigation.location?.pathname)
     if(navigation.location?.pathname !== '/login' ) {
       navigate("/login");
     }

@@ -9,7 +9,7 @@ export const ErrorMessage = ({error} : ErrorProps) => {
   const { message, errorType } = useError(error);
 
   useEffect(() => {
-    console.log(error);
+    console.error(error);
   }, [error])
 
   return (
@@ -29,10 +29,9 @@ export const ErrorMessage = ({error} : ErrorProps) => {
 }
 
 const useError = (error: ApiError | Error): { message: string, errorType: string} => {
-  console.log(error);
   const errorResponse = (error as ApiError);
 
-  if(errorResponse?.type === 'error') {
+  if (errorResponse?.type === 'error') {
     return {message: errorResponse.message, errorType: errorResponse.error};
   }
 
