@@ -39,7 +39,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className='h-dvh'>
-      <div className="app-navigation"></div>
         {children}
         <ScrollRestoration />
         <Scripts />

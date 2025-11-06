@@ -1,6 +1,6 @@
 import { useSystemState } from '../api/clientApi';
 import { Dashboard } from './components';
-import { ErrorMessage } from '../components/errorMessage';
+import { ErrorMessage } from '../components/ErrorMessage';
 import { Loading } from '@ui/loading';
 
 export function DashboardPage() {
