@@ -55,6 +55,7 @@ export const AuthenticationProvider = ({ children, onLogin, onLogout }: Authenti
       dispatcher({ type: 'localStateUpdate', user: savedState.value });
     }
   }, [savedState.value]);
+
   useEffect(() => {
     switch (authenticationState.type) {
       case 'initialised':
@@ -93,6 +94,13 @@ export const AuthenticationProvider = ({ children, onLogin, onLogout }: Authenti
   const user = authenticationState.type === 'authenticated' ? authenticationState.user : undefined;
   const token = authenticationState.type === 'authenticated' ? authenticationState.user.token : undefined;
   const isLoading = authenticationState.type !== 'authenticated' && authenticationState.type !== 'notAuthenticated';
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (user) return;
+    onLogout?.();
+  }, [isLoading, onLogout, user]);
+
   return (
     <AuthenticationContext.Provider value={{ isLoading, user, token, login, logout }}>
       {children}
