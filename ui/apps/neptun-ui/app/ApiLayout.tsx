@@ -4,23 +4,24 @@ import {
 } from './api/authentication';
 
 import { DashboardLayout } from './DashboardLayout';
+import { useCallback } from 'react';
 
 const ApiLayout = () => {
   /** Move to context **/
   const navigate = useNavigate();
   const navigation = useNavigation();
 
-  const onUnauthenticated = () => {
+  const onUnauthenticated = useCallback(() => {
     if (navigation.location?.pathname !== '/login') {
       navigate('/login');
     }
-  };
+  }, [navigate, navigation.location?.pathname]);
 
-  const onLogin = () => {
+  const onLogin = useCallback(() => {
     if (navigation.location?.pathname === '/login') {
       navigate('/');
     }
-  };
+  }, [navigate, navigation.location?.pathname]);
 
   return (
     <AuthenticationProvider onLogout={onUnauthenticated} onLogin={onLogin}>
