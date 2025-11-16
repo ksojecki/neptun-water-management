@@ -1,6 +1,12 @@
 import { useLayoutEffect, useRef } from 'react';
 
-export const Modal = ({ open, onClosed }: { open: boolean, onClosed: () => void }) => {
+export const Modal = ({
+  open,
+  onClosed,
+}: {
+  open: boolean;
+  onClosed: () => void;
+}) => {
   const modal = useRef<HTMLDialogElement | null>(null);
   const prevState = useRef(false);
 
@@ -11,17 +17,18 @@ export const Modal = ({ open, onClosed }: { open: boolean, onClosed: () => void 
     prevState.current = open;
     const onModalClosed = () => {
       prevState.current = false;
-      onClosed()
+      onClosed();
     };
     modalWindow.addEventListener('close', onModalClosed);
     return () => {
-      if(modalWindow) {
+      if (modalWindow) {
         modalWindow.removeEventListener('close', onModalClosed);
       }
-    }
+    };
   }, [onClosed, open]);
 
-  return <dialog id="my_modal_2" className="modal" ref={modal}>
+  return (
+    <dialog id="my_modal_2" className="modal" ref={modal}>
       <div className="modal-box">
         <h3 className="font-bold text-lg">Log out</h3>
         <p className="py-4">Are you sure you want to log out?</p>
@@ -34,4 +41,5 @@ export const Modal = ({ open, onClosed }: { open: boolean, onClosed: () => void 
         </div>
       </div>
     </dialog>
-}
+  );
+};

@@ -11,7 +11,6 @@ import { dataModel } from '../dataModel/dataModel';
 import { sign, verify } from 'jsonwebtoken';
 import { AppSettings } from '../settings';
 
-
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
@@ -28,7 +27,8 @@ router.post('/get-token', async (req, res) => {
   const user = await dataModel.users.findOne(credentials);
 
   if (!user) {
-    res.status(401)
+    res
+      .status(401)
       .json({ error: 'unauthorized', message: 'Invalid credentials' });
     return;
   }
@@ -48,37 +48,49 @@ router.post('/get-token', async (req, res) => {
       token: sign(user, AppSettings.AUTHENTICATION_SECRET, {
         expiresIn: '1h',
         audience: user.forceChangePassword ? 'change-password' : 'neptun-ui',
-      })
-    }
+      }),
+    },
   };
   res.json(response);
 });
 
 router.get('/change-password', async (req, res) => {
   res.json({ message: 'Change password' });
-})
+});
 
 export const useAuthentication: Handler = (request, res, next) => {
   const authHeader = request.headers.authorization;
   const hasBearer = authHeader?.startsWith('Bearer ') ?? false;
 
   if (!hasBearer) {
-    res.status(401).json({ type: 'error', error: 'unauthorized', message: 'Missing token' } satisfies UnauthorizedError);
+    res
+      .status(401)
+      .json({
+        type: 'error',
+        error: 'unauthorized',
+        message: 'Missing token',
+      } satisfies UnauthorizedError);
     return;
   }
 
-  const token = authHeader?.split(" ")[1] ?? '';
+  const token = authHeader?.split(' ')[1] ?? '';
   try {
     const data = verify(token, AppSettings.AUTHENTICATION_SECRET);
     request.user = data as UserInfo;
     console.log(data);
   } catch (error) {
-    res.status(401).json({ type: 'error', error: 'unauthorized', message: 'Invalid token' } satisfies UnauthorizedError);
+    res
+      .status(401)
+      .json({
+        type: 'error',
+        error: 'unauthorized',
+        message: 'Invalid token',
+      } satisfies UnauthorizedError);
     console.error(error);
     return;
   }
 
   next();
-}
+};
 
 export const authentication = router;

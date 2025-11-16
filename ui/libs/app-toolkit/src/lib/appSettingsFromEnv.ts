@@ -1,5 +1,5 @@
 export type SettingName = string | number;
-type AppSettings<T extends SettingName> = { [key in T]: string }
+type AppSettings<T extends SettingName> = { [key in T]: string };
 
 export type EnvTable = { [key: string]: string | undefined };
 
@@ -10,8 +10,10 @@ export type EnvTable = { [key: string]: string | undefined };
  * @returns An object containing the extracted settings.
  * @throws {Error} If any of the required variables are missing.
  */
-export function extractAppSettingsFromEnv<T extends SettingName>
-(variables: readonly T[], envArray: EnvTable = process.env): AppSettings<T> {
+export function extractAppSettingsFromEnv<T extends SettingName>(
+  variables: readonly T[],
+  envArray: EnvTable = process.env
+): AppSettings<T> {
   const missingVariables: T[] = [];
   const settings: AppSettings<T> = {} as AppSettings<T>;
 
@@ -23,8 +25,10 @@ export function extractAppSettingsFromEnv<T extends SettingName>
     }
   }
 
-  if( missingVariables.length > 0) {
-    throw new Error(`Missing required variables: ${missingVariables.join(', ')}`)
+  if (missingVariables.length > 0) {
+    throw new Error(
+      `Missing required variables: ${missingVariables.join(', ')}`
+    );
   }
 
   return settings;

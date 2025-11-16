@@ -33,9 +33,12 @@ export const useQuery = <TResponse, TPayload = undefined>({
   const timestamp = useRef(0);
 
   useEffect(() => {
-    if (!isEnabled ||
+    if (
+      !isEnabled ||
       queryState !== 'idle' ||
-      Date.now() - timestamp.current < 5000) return;
+      Date.now() - timestamp.current < 5000
+    )
+      return;
     setQueryState('loading');
     timestamp.current = Date.now();
     query<TResponse, TPayload>({ apiToken, endpoint, body })
@@ -45,7 +48,11 @@ export const useQuery = <TResponse, TPayload = undefined>({
       })
       .catch((error) => {
         setQueryState('error');
-        setError({ name: 'Query Processing Error', message: `Cannot process request to ${endpoint}`, cause: error } );
+        setError({
+          name: 'Query Processing Error',
+          message: `Cannot process request to ${endpoint}`,
+          cause: error,
+        });
       });
   }, [apiToken, endpoint, body, isEnabled, queryState]);
 

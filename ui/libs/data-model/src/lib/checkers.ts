@@ -7,6 +7,8 @@ import { UnauthorizedError } from './types/response';
 export const isUnauthorized = (
   error: UnauthorizedError | unknown
 ): error is UnauthorizedError => {
-  const errorResponse = (error as UnauthorizedError);
-  return errorResponse?.type === 'error' && errorResponse?.error === 'unauthorized';
+  const errorResponse = error as UnauthorizedError;
+  return (
+    errorResponse?.type === 'error' && errorResponse?.error === 'unauthorized'
+  );
 };

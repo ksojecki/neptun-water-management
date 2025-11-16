@@ -24,4 +24,4 @@ export type {
   ApiResponse,
 } from './lib/types/response';
 
-export { isUnauthorized } from './lib/checkers'
+export { isUnauthorized } from './lib/checkers';

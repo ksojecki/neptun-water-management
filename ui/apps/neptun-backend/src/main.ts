@@ -5,7 +5,7 @@ import { getCurrentState } from './api/water';
 import * as https from 'node:https';
 import { AppSettings } from './settings';
 import * as fs from 'node:fs';
-import cors from 'cors'
+import cors from 'cors';
 import { useErrorHandler } from './api/errorHandler';
 
 const app = express();
@@ -21,10 +21,13 @@ app.get('/api/state', useAuthentication, (req, res) => {
 
 const port = process.env.PORT || 3333;
 
-const httpsServer = https.createServer({
-  key: fs.readFileSync(AppSettings.HTTPS_KEY),
-  cert: fs.readFileSync(AppSettings.HTTPS_CERT)
-}, app);
+const httpsServer = https.createServer(
+  {
+    key: fs.readFileSync(AppSettings.HTTPS_KEY),
+    cert: fs.readFileSync(AppSettings.HTTPS_CERT),
+  },
+  app
+);
 
 httpsServer.on('listening', () => console.log(`Listening on port ${port}`));
 httpsServer.on('error', console.error);

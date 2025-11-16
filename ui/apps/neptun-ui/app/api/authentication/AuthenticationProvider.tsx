@@ -12,9 +12,7 @@ import {
   AuthenticationResponse,
   UserInfo,
 } from '@neptun/data-model';
-import {
-  authenticationReducer,
-} from './authenticationReducer';
+import { authenticationReducer } from './authenticationReducer';
 import { useLocalState } from './useLocalState';
 
 type AuthenticationProviderProps = {
@@ -35,9 +33,15 @@ const AuthenticationContext = createContext<AuthenticationContextType | null>(
   null
 );
 
-export const AuthenticationProvider = ({ children, onLogin, onLogout }: AuthenticationProviderProps) => {
+export const AuthenticationProvider = ({
+  children,
+  onLogin,
+  onLogout,
+}: AuthenticationProviderProps) => {
   const savedState = useLocalState<UserInfo | undefined>('authInfo');
-  const [authenticationState, dispatcher] = useReducer(authenticationReducer, { type: 'initialised' });
+  const [authenticationState, dispatcher] = useReducer(authenticationReducer, {
+    type: 'initialised',
+  });
 
   const login = useCallback((credentials: AuthCredentials) => {
     dispatcher({
@@ -47,7 +51,7 @@ export const AuthenticationProvider = ({ children, onLogin, onLogout }: Authenti
   }, []);
 
   const logout = useCallback(() => {
-    dispatcher({type: 'logout'});
+    dispatcher({ type: 'logout' });
   }, []);
 
   useEffect(() => {
@@ -73,27 +77,40 @@ export const AuthenticationProvider = ({ children, onLogin, onLogout }: Authenti
         onLogout?.();
         return;
       case 'makeRequest':
-        query<
-          AuthenticationResponse,
-          AuthCredentials | null
-        >({ endpoint: 'authentication/get-token', body: authenticationState.credentials })
-          .then((response) => {
-            if (response.type === 'success') {
-              dispatcher({ type: 'authResponse', response });
-            } else {
-              dispatcher({ type: 'logout' });
-            }
-          });
+        query<AuthenticationResponse, AuthCredentials | null>({
+          endpoint: 'authentication/get-token',
+          body: authenticationState.credentials,
+        }).then((response) => {
+          if (response.type === 'success') {
+            dispatcher({ type: 'authResponse', response });
+          } else {
+            dispatcher({ type: 'logout' });
+          }
+        });
         dispatcher({ type: 'requestSent' });
         return;
       case 'waitingForResponse':
         return;
     }
-  }, [authenticationState.type, authenticationState, savedState, onLogin, onLogout]);
+  }, [
+    authenticationState.type,
+    authenticationState,
+    savedState,
+    onLogin,
+    onLogout,
+  ]);
 
-  const user = authenticationState.type === 'authenticated' ? authenticationState.user : undefined;
-  const token = authenticationState.type === 'authenticated' ? authenticationState.user.token : undefined;
-  const isLoading = authenticationState.type !== 'authenticated' && authenticationState.type !== 'notAuthenticated';
+  const user =
+    authenticationState.type === 'authenticated'
+      ? authenticationState.user
+      : undefined;
+  const token =
+    authenticationState.type === 'authenticated'
+      ? authenticationState.user.token
+      : undefined;
+  const isLoading =
+    authenticationState.type !== 'authenticated' &&
+    authenticationState.type !== 'notAuthenticated';
 
   useEffect(() => {
     if (isLoading) return;
@@ -102,7 +119,9 @@ export const AuthenticationProvider = ({ children, onLogin, onLogout }: Authenti
   }, [isLoading, onLogout, user]);
 
   return (
-    <AuthenticationContext.Provider value={{ isLoading, user, token, login, logout }}>
+    <AuthenticationContext.Provider
+      value={{ isLoading, user, token, login, logout }}
+    >
       {children}
     </AuthenticationContext.Provider>
   );

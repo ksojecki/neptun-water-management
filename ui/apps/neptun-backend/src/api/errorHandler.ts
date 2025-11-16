@@ -10,7 +10,7 @@ export const useErrorHandler: Handler = (req, res, next) => {
       type: 'error',
       error: 'server-error',
       message: 'Request cannot be processed, see server logs for details',
-    }
+    };
     res.status(500).send(response);
   }
-}
+};

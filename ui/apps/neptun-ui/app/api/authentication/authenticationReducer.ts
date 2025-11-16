@@ -7,28 +7,29 @@ import {
 export type AuthenticatedState = {
   type: 'authenticated';
   user: UserInfo;
-}
+};
 
 export type AuthenticationState =
   | AuthenticatedState
   | { type: 'initialised' }
   | { type: 'waitingForResponse' }
   | {
-  type: 'makeRequest';
-  credentials: AuthCredentials;
-} | {
-  type: 'forgetUser';
-} | {
-  type: 'notAuthenticated';
-};
+      type: 'makeRequest';
+      credentials: AuthCredentials;
+    }
+  | {
+      type: 'forgetUser';
+    }
+  | {
+      type: 'notAuthenticated';
+    };
 
 type AuthActions =
-  | { type: 'localStateUpdate', user: UserInfo | undefined }
+  | { type: 'localStateUpdate'; user: UserInfo | undefined }
   | { type: 'authRequest'; credentials: AuthCredentials }
   | { type: 'authResponse'; response: AuthenticationResponse }
   | { type: 'logout' }
   | { type: 'requestSent' };
-
 
 export const authenticationReducer = (
   state: AuthenticationState,

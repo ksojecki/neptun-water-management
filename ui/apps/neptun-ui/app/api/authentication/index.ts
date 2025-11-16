@@ -1,1 +1,4 @@
-export { AuthenticationProvider, useAuthentication } from './AuthenticationProvider';
+export {
+  AuthenticationProvider,
+  useAuthentication,
+} from './AuthenticationProvider';

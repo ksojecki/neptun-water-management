@@ -1,8 +1,8 @@
-import { WaterSource } from "./waterSources";
+import { WaterSource } from './waterSources';
 
 export type SystemState = {
-    status: SystemStatus;
-    sources: WaterSource[];
+  status: SystemStatus;
+  sources: WaterSource[];
 };
 
 export type SystemStatus = 'Offline' | 'Ready' | 'NoWater' | 'FillingTanks';

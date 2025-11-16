@@ -5,11 +5,11 @@ import { Loading } from '@ui/loading';
 
 export function DashboardPage() {
   const { systemState, error } = useSystemState();
-  if(error) {
-    return <ErrorMessage error={error} />
+  if (error) {
+    return <ErrorMessage error={error} />;
   }
-  if(systemState === undefined) return <Loading />;
-  return <Dashboard systemState={systemState} />
+  if (systemState === undefined) return <Loading />;
+  return <Dashboard systemState={systemState} />;
 }
 
 export default DashboardPage;

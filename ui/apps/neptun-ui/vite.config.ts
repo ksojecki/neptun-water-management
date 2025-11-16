@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import { reactRouter } from '@react-router/dev/vite';
 import tailwindcss from '@tailwindcss/vite';
-import tsconfigPaths from 'vite-tsconfig-paths'
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig(() => ({
   root: __dirname,
@@ -11,21 +11,21 @@ export default defineConfig(() => ({
     host: 'localhost',
     https: {
       key: '/Users/kamilsojecki/.local-dev-cert/dev.pem',
-      cert: '/Users/kamilsojecki/.local-dev-cert/cert.pem'
-    }
+      cert: '/Users/kamilsojecki/.local-dev-cert/cert.pem',
+    },
   },
   preview: {
     port: 4300,
     host: 'localhost',
     https: {
       key: '/Users/kamilsojecki/.local-dev-cert/dev.pem',
-      cert: '/Users/kamilsojecki/.local-dev-cert/cert.pem'
-    }
+      cert: '/Users/kamilsojecki/.local-dev-cert/cert.pem',
+    },
   },
   plugins: [
     tsconfigPaths(),
     !process.env.VITEST && reactRouter(),
-    tailwindcss()
+    tailwindcss(),
   ],
   // Uncomment this if you are using workers.
   // worker: {

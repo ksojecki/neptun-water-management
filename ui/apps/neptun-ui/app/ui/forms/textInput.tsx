@@ -15,13 +15,13 @@ export const TextInput = ({
 }: TextInputProps) => {
   return (
     <label>
-      <p className='text-sm mb-3'>{ label }</p>
-    <input
-      type={type}
-      aria-invalid={isInvalid}
-      className={ `input validator ${className}` }
-      {...props}
-    />
+      <p className="text-sm mb-3">{label}</p>
+      <input
+        type={type}
+        aria-invalid={isInvalid}
+        className={`input validator ${className}`}
+        {...props}
+      />
     </label>
   );
 };

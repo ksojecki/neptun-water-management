@@ -3,14 +3,14 @@ import { useEffect } from 'react';
 
 type ErrorProps = {
   error: ApiError | Error;
-}
+};
 
-export const ErrorMessage = ({error} : ErrorProps) => {
+export const ErrorMessage = ({ error }: ErrorProps) => {
   const { message, errorType } = useError(error);
 
   useEffect(() => {
     console.error(error);
-  }, [error])
+  }, [error]);
 
   return (
     <div className="content-center h-[100%]">
@@ -26,14 +26,16 @@ export const ErrorMessage = ({error} : ErrorProps) => {
       </div>
     </div>
   );
-}
+};
 
-const useError = (error: ApiError | Error): { message: string, errorType: string} => {
-  const errorResponse = (error as ApiError);
+const useError = (
+  error: ApiError | Error
+): { message: string; errorType: string } => {
+  const errorResponse = error as ApiError;
 
   if (errorResponse?.type === 'error') {
-    return {message: errorResponse.message, errorType: errorResponse.error};
+    return { message: errorResponse.message, errorType: errorResponse.error };
   }
 
-  return {message: JSON.stringify(error, null, 2), errorType: 'unknown'};
+  return { message: JSON.stringify(error, null, 2), errorType: 'unknown' };
 };

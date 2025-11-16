@@ -1,9 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "files": [],
-  "include": [
-    "./authInfo.d.ts"
-  ],
+  "include": ["./authInfo.d.ts"],
   "references": [
     {
       "path": "../../libs/app-toolkit"

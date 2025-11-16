@@ -6,8 +6,6 @@ import { useAuthentication } from '../../api/authentication';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 
-
-
 export const LoginForm = () => {
   const {
     register,
@@ -19,23 +17,23 @@ export const LoginForm = () => {
 
   const { login, user } = useAuthentication();
   useEffect(() => {
-    if(user) {
+    if (user) {
       navigate('/');
     }
   }, [navigate, user]);
-  if(user) {
+  if (user) {
     // navigate('/');
-    return <div>You are logged in as {user.username}</div>
+    return <div>You are logged in as {user.username}</div>;
   }
 
   const authenticate = (credentials: AuthCredentials) => {
     login(credentials);
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit(authenticate)} className="flex flex-col gap-4">
       <TextInput
-        {...register('username', {required: true})}
+        {...register('username', { required: true })}
         className="w-[100%]"
         label="Login"
         isInvalid={!!errors.password}
@@ -43,7 +41,7 @@ export const LoginForm = () => {
         type={'text'}
       />
       <TextInput
-        {...register('password', {required: true, minLength: 3})}
+        {...register('password', { required: true, minLength: 3 })}
         className="w-[100%]"
         label="Password"
         placeholder="Password"
@@ -51,4 +49,5 @@ export const LoginForm = () => {
       />
       <SubmitButton />
     </form>
-  );};
+  );
+};

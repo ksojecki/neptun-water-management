@@ -10,7 +10,7 @@ const SUPPORTED_SCHEMA = 1;
 export type DataModel = {
   readonly users: Collection<User>;
   readonly settings: Collection<Settings>;
-}
+};
 
 async function prepareDataModel(db: Db): Promise<DataModel> {
   const currentSchema = await getSchemaVersion(db);
@@ -24,13 +24,13 @@ async function prepareDataModel(db: Db): Promise<DataModel> {
 
   return {
     users: db.collection<User>('users'),
-    settings: db.collection<Settings>('settings')
-  }
+    settings: db.collection<Settings>('settings'),
+  };
 }
 
 async function getSchemaVersion(db: Db): Promise<number> {
   const collections = await db.listCollections().toArray();
-  if (collections.includes({ name: 'settings'})) {
+  if (collections.includes({ name: 'settings' })) {
     return CLEAN_SCHEMA;
   } else {
     const settings = await db.collection<Settings>('settings').findOne();
@@ -45,21 +45,23 @@ async function migrateSchema(currentSchema: number, db: Db) {
 
     const defaultCredentials = hashPassword({
       username: 'admin',
-      password: 'password'
+      password: 'password',
     });
 
     await users.insertOne({
       ...defaultCredentials,
       email: '',
-      forceChangePassword: true
+      forceChangePassword: true,
     });
 
     const settings = db.collection('settings');
     await settings.createIndex({ id: 'text' }, { unique: true });
-    await settings.findOneAndUpdate({ id: 'schema' }, { $set: { schemaVersion: 1 }})
+    await settings.findOneAndUpdate(
+      { id: 'schema' },
+      { $set: { schemaVersion: 1 } }
+    );
     currentSchema++;
   }
 }
 
 export const dataModel = await prepareDataModel(connection);
-

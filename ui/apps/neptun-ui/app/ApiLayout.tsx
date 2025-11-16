@@ -1,7 +1,5 @@
 import { useNavigate, useNavigation } from 'react-router';
-import {
-  AuthenticationProvider,
-} from './api/authentication';
+import { AuthenticationProvider } from './api/authentication';
 
 import { DashboardLayout } from './DashboardLayout';
 import { useCallback } from 'react';

@@ -1,7 +1,15 @@
-export type Success<T> = { type: 'success', data: T };
+export type Success<T> = { type: 'success'; data: T };
 
-export type UnauthorizedError = { type: 'error', error: 'unauthorized', message: string };
-export type ServerError = { type: 'error', error: 'server-error', message: string };
+export type UnauthorizedError = {
+  type: 'error';
+  error: 'unauthorized';
+  message: string;
+};
+export type ServerError = {
+  type: 'error';
+  error: 'server-error';
+  message: string;
+};
 
 export type ApiError = UnauthorizedError | ServerError;
 
